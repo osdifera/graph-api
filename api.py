@@ -2,9 +2,6 @@ import requests
 from flask import Flask
 import json
 
-#List of pairs
-LIST_OF_PAIRS = ['0x01962144d41415cca072900fe87bbe2992a99f10','0x64c9cfa988bbe7b2df671af345bcf8fa904cebb8']
-
 # function to use requests.post to make an API call to the subgraph url
 def run_query(q):
 
@@ -19,25 +16,7 @@ def run_query(q):
 
 def prepareQuery(pair):
     #The Graph query - get liquidity per pair
-    LIQUIDITY_QUERY = """
-{
-pair(id: "replacebypairaddress"){
-     token0 {
-       id
-       symbol
-     }
-     token1 {
-       id
-       symbol
-     }
-     reserve0
-     reserve1
-     reserveUSD
-     token0Price
-     token1Price
- }
-}
-"""
+    LIQUIDITY_QUERY = """{pair(id: "replacebypairaddress"){token0{id symbol} token1 {id symbol} reserve0 reserve1 reserveUSD token0Price token1Price }}"""
     fixed_query = LIQUIDITY_QUERY.replace("replacebypairaddress", pair)
     return fixed_query
 
